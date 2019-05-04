@@ -1,0 +1,21 @@
+{
+  "name": "truss",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "sample": "node index.js < sample/sample.csv",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "5.16.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.17.2",
+    "eslint-plugin-jest": "22.5.1",
+    "jest": "24.7.1"
+  }
+}
