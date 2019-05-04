@@ -2,21 +2,17 @@
 
 ```bash
 # Clone this repository
-git clone https://github.com/rbiggers/electron-pandora.git
+git clone https://github.com/rbiggers/truss-challenge.git
 # Go into the repository
-cd electron-pandora
+cd truss-challenge
 # Install dependencies
 npm install
 # Run the app
-npm run start
-# Run the app in debug mode
-npm run dev
-# Run the app with nodemon
-npm run watch
-# Run the app with nodemon in debug mode
-npm run watch:dev
-# Build the app
-npm run dist
+npm run start < sample/sample.csv
+# Run the app
+npm run start < sample/sample-with-broken-utf8.csv
+# Run the tests
+npm run test
 ```
 
 #### License [MIT](LICENSE.md)

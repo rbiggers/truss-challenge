@@ -12,21 +12,22 @@ const rl = readline.createInterface({
 
 const csvArray = [];
 let normalizedCSV = '';
+let tempCSVLine = '';
 
 function appendCSVLine(index, input, newline = false) {
   switch (index) {
     case 0: {
-      normalizedCSV += `${input}${newline ? '\n' : ''}`;
+      tempCSVLine += `${input}${newline ? '\n' : ''}`;
       break;
     }
 
     case 1: {
-      normalizedCSV += `,"${input}"${newline ? '\n' : ''}`;
+      tempCSVLine += `,"${input}"${newline ? '\n' : ''}`;
 
       break;
     }
     default:
-      normalizedCSV += `,${input}${newline ? '\n' : ''}`;
+      tempCSVLine += `,${input}${newline ? '\n' : ''}`;
       break;
   }
 }
@@ -36,7 +37,6 @@ function processLine(line) {
   let barDuration;
 
   for (let index = 0; index < line.length; index++) {
-    console.log('line');
 
     const lineData = line[index];
 
@@ -47,7 +47,7 @@ function processLine(line) {
           const eastern = normApi.convertToEasternTimeZone({ timeString: lineData, timeZone: 'America/New_York' });
           appendCSVLine(index, normApi.convertTimeToISO8601(eastern));
         } catch (error) {
-          console.error(error);
+          throw new Error(error);
         }
         break;
       }
@@ -57,7 +57,7 @@ function processLine(line) {
           normApi.validateUnicode(lineData);
           appendCSVLine(index, lineData);
         } catch (error) {
-          console.error(error);
+          throw new Error(error);
         }
         break;
       }
@@ -66,7 +66,7 @@ function processLine(line) {
         try {
           appendCSVLine(index, normApi.formatZipcode(lineData));
         } catch (error) {
-          console.error(error);
+          throw new Error(error);
         }
         break;
       }
@@ -75,7 +75,7 @@ function processLine(line) {
         try {
           appendCSVLine(index, normApi.convertToUpperCase(lineData));
         } catch (error) {
-          console.error(error);
+          throw new Error(error);
         }
         break;
       }
@@ -85,7 +85,7 @@ function processLine(line) {
           fooDuration = normApi.convertTimeStamp(lineData);
           appendCSVLine(index, fooDuration);
         } catch (error) {
-          console.error(error);
+          throw new Error(error);
         }
         break;
       }
@@ -95,7 +95,7 @@ function processLine(line) {
           barDuration = normApi.convertTimeStamp(lineData);
           appendCSVLine(index, barDuration);
         } catch (error) {
-          console.error(error);
+          throw new Error(error);
         }
         break;
       }
@@ -104,7 +104,7 @@ function processLine(line) {
         try {
           appendCSVLine(index, +fooDuration + +barDuration);
         } catch (error) {
-          console.error(error);
+          throw new Error(error);
         }
         break;
       }
@@ -113,7 +113,7 @@ function processLine(line) {
         try {
           appendCSVLine(index, lineData, true);
         } catch (error) {
-          console.error(error);
+          throw new Error(error);
         }
         break;
       }
@@ -131,7 +131,13 @@ function processFile() {
       appendCSVLine(index, csvArray[index][0], true);
       continue;
     }
-    processLine(csvArray[index][0]);
+    try {
+      processLine(csvArray[index][0]);
+      normalizedCSV += tempCSVLine;
+    } catch (error) {
+      console.log(error);
+    }
+
   }
   writeStream.write(normalizedCSV);
 }
