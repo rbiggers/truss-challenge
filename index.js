@@ -126,6 +126,9 @@ function processLine(line) {
 
 function processFile() {
   for (let index = 0; index < csvArray.length; index++) {
+    // Clear Temp line
+    tempCSVLine = '';
+
     if (index === 0) {
       // Write header as is
       appendCSVLine(index, csvArray[index][0], true);
