@@ -208,6 +208,10 @@ const NormilizationApi = () => {
     }
   };
 
+  /**
+   *
+   * @param {string} strData - THe data to be parsed
+   */
   const parseCSVLine = (strData) => {
     const arr = [];
     let quote = false; // true means we're inside a quoted field
