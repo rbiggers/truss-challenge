@@ -5,8 +5,7 @@
 git clone https://github.com/rbiggers/truss-challenge.git
 # Go into the repository
 cd truss-challenge
-# System configuration 
-### If you already have NVM & Node you can skip this step
+# System configuration (If you already have NVM & Node you can skip this step)
 cd nvm-utils/
 ./install-nvm.sh
 ## NVM & Node should now be installed. You may have to open a new terminal
